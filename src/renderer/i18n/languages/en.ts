@@ -1,5 +1,4 @@
-import enLocale from "element-plus/dist/locale/en.min"
-
+import enLocale from "element-plus/dist/locale/en.mjs"
 export const lang = {
     welcome: "Welcome use the framework",
     buttonTips: "You can click buttons to experience",

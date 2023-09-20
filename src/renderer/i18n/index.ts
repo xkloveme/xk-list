@@ -19,7 +19,6 @@ export function loadLanguages() {
 export function i18nt(key: string) {
     return i18n.global.d(key);
 }
-
 export const i18n = createI18n({
     legacy: false,
     locale: 'zh-cn',

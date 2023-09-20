@@ -121,7 +121,11 @@ async function searchHandle() {
     url = new URL(searchKey.value);
   } catch {
     const query = encodeURIComponent(searchKey.value);
-    url = new URL(`https://www.bing.com/search?q=${query}`);
+    if(query){
+      url = new URL(`https://www.bing.com/search?q=${query}`);
+    }else{
+      url = new URL(`https://www.bing.com/search?q=Bing+Al&showconv=1&FORM=hpcodx`);
+    }
   }
   await invoke(IpcChannel.BrowserDemoTabJumpToUrl, {
     url: url.href,

@@ -1,5 +1,4 @@
-import zhLocale from "element-plus/dist/locale/zh-cn.min";
-
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 export const lang = {
   welcome: "欢迎进入本框架",
   buttonTips: "您可以点击的按钮测试功能",
@@ -62,5 +61,5 @@ export const lang = {
   browser: {
     searchBarPlaceholder: "在Bing中搜索，或输入一个网址",
   },
-  el: zhLocale,
+  el: zhCn,
 };
