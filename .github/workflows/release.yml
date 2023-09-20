@@ -11,7 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        # os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest]
         node-version: [20.x]
 
     steps:
@@ -34,17 +35,23 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }}
-          path: build
-      - name: Perform Github Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
+          path: |
             build/*.exe
             build/*.dmg
             build/*.AppImage
             build/*.deb
             build/*.zip
             build/*.yml
+      # - name: Perform Github Release
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: |
+      #       build/*.exe
+      #       build/*.dmg
+      #       build/*.AppImage
+      #       build/*.deb
+      #       build/*.zip
+      #       build/*.yml
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
