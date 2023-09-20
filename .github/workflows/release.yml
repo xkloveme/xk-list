@@ -27,8 +27,8 @@ jobs:
       - name: Build Resoure file
         run: |
           pnpm install
-          pnpm build
-          pnpm pack:resources
+          pnpm run build
+          pnpm run pack:resources
       - name: Create Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
