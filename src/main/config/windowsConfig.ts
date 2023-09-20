@@ -4,8 +4,8 @@ import { BrowserWindowConstructorOptions } from "electron";
 export const mainWindowConfig: BrowserWindowConstructorOptions = {
   height: 800,
   useContentSize: true,
-  width: 1700,
-  minWidth: 1366,
+  width: 900,
+  minWidth: 566,
   show: false,
   frame: IsUseSysTitle,
   webPreferences: {
