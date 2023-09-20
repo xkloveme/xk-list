@@ -35,4 +35,4 @@ jobs:
           commit_message: Update Hot Resoure File
           build_dir: ./build/update
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
