@@ -1,6 +1,6 @@
 {
   "name": "electron-vite-template",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./dist/electron/main/main.js",
   "author": "xkloveme <https://github.com/xkloveme>",
   "description": "electron-vite-template project",
