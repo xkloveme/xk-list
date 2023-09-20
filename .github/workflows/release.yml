@@ -30,6 +30,11 @@ jobs:
           pnpm install
           pnpm run build
           pnpm run pack:resources
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}
+          path: build
       - name: Perform Github Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -39,6 +44,7 @@ jobs:
             build/*.dmg
             build/*.AppImage
             build/*.deb
+            build/*.zip
             build/*.yml
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
