@@ -23,6 +23,6 @@ jobs:
         #   ELECTRON_RUN_AS_NODE: “1”
         shell: bash
         run: |
-          npm ci
+          npm install
           npm install xvfb-maybe -D
           ./node_modules/.bin/xvfb-maybe npm run build

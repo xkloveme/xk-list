@@ -14,16 +14,21 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: true
       - name: Build Resoure file
         run: |
-          npm ci
-          npm run build
-          npm run pack:resources
+          pnpm install
+          pnpm build
+          pnpm pack:resources
       - name: Create Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -33,5 +38,6 @@ jobs:
             build/*.dmg
             build/*.AppImage
             build/*.deb
+            build/*.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
