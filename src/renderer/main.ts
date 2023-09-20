@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import 'virtual:uno.css'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
 import './styles/index.scss'
@@ -14,7 +14,7 @@ import { i18n } from "./i18n"
 import TitleBar from "./components/common/TitleBar.vue"
 const app = createApp(App)
 const store = createPinia()
-app.use(ElementPlus, { i18n: i18n.global.d })
+// app.use(ElementPlus, { i18n: i18n.global.d })
 app.use(router)
 app.use(store)
 app.use(i18n)
@@ -24,4 +24,3 @@ errorHandler(app)
 app.component("TitleBar", TitleBar);
 
 app.mount("#app")
-

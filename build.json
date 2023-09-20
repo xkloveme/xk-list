@@ -11,8 +11,8 @@
   "beforePack": ".electron-vite/beforePack.js",
 
 
-  "productName": "electron-vite-template",
-  "appId": "org.sky.electron-vite-template",
+  "productName": "xk-list",
+  "appId": "com.jixiaokang.xk-list",
   "directories": {
     "output": "build"
   },

@@ -4,6 +4,10 @@ import vuePlugin from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { getConfig } from "./utils";
 import viteIkarosTools from "./plugin/vite-ikaros-tools";
+import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 function resolve(dir: string) {
   return join(__dirname, "..", dir);
@@ -20,7 +24,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@renderer": root,
+      "@": resolve("src"),
+      "@renderer": resolve("src/renderer"),
     },
   },
   base: "./",
@@ -34,6 +39,29 @@ export default defineConfig({
     cssCodeSplit: false,
   },
   server: {},
-  plugins: [vueJsx(), vuePlugin(), viteIkarosTools()],
+  plugins: [UnoCSS(), vueJsx(), vuePlugin(), viteIkarosTools(),
+  AutoImport({
+    resolvers: [ElementPlusResolver()],
+    include: [
+      /\.[tj]sx?$/,
+      /\.vue$/,
+      /\.vue\?vue/,
+      /\.md$/,
+    ],
+
+    // global imports to register
+    imports: [
+      // 插件预设支持导入的api
+      'vue',
+      'vue-router',
+      'pinia'
+      // 自定义导入的api
+    ],
+    dts: './../../customTypes/auto-imports.d.ts',
+  }),
+  Components({
+    resolvers: [ElementPlusResolver()],
+    dts: './../../customTypes/components.d.ts',
+  }),],
   optimizeDeps: {},
 });

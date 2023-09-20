@@ -67,6 +67,10 @@
           <el-button v-if="showInMyComputer !== 0" type="primary" round @click="setShowOnMyComputer">{{
             t(showInMyComputer === 1 ? "buttons.hideOnMyComputer" : "buttons.showOnMyComputer")
           }}</el-button>
+          <router-link to="/">
+            <el-button type="success">首页</el-button>
+          </router-link>
+          
         </div>
         <div class="doc">
           <el-pagination :current-page="elCPage" :page-sizes="[100, 200, 300, 400]" :page-size="elPageSize"
