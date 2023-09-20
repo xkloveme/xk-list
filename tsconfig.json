@@ -16,7 +16,7 @@
     "types": ["vite/client"],
     "paths": {
       "@config/*": ["config/*"],
-      "@src/*": ["src/*"],
+      "@/*": ["src/*"],
       "@renderer/*": ["src/renderer/*"],
       "@main/*": ["src/main/*"]
     },

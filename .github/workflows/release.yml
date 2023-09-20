@@ -44,6 +44,5 @@ jobs:
             build/*.AppImage
             build/*.deb
             build/*.zip
-            build/*.yml
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}

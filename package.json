@@ -34,8 +34,6 @@
     "glob": "^10.3.4",
     "regedit": "^5.1.2",
     "semver": "^7.5.4",
-    "unplugin-auto-import": "^0.16.6",
-    "unplugin-vue-components": "^0.25.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -53,6 +51,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@vue/compiler-sfc": "^3.3.4",
     "adm-zip": "^0.5.10",
+    "body-parser": "^1.20.2",
     "cfonts": "^3.2.0",
     "chalk": "5.3.0",
     "cross-env": "^7.0.3",
@@ -78,6 +77,8 @@
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "unocss": "^0.56.0",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.9",
     "vue": "^3.3.4",
     "vue-i18n": "^9.4.1",
