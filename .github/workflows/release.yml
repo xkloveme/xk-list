@@ -30,8 +30,8 @@ jobs:
           pnpm install
           pnpm run build
           pnpm run pack:resources
-      - name: Create Release
-        uses: technote-space/action-gh-release@v2
+      - name: Perform Github Release
+        uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
