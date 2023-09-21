@@ -1,6 +1,6 @@
 {
   "name": "xk-list",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "main": "./dist/electron/main/main.js",
   "author": "xkloveme <https://github.com/xkloveme>",
   "description": "xk-list project",
