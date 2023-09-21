@@ -1,9 +1,13 @@
 <template>
   <el-row class="mt-10">
     <el-button>Default</el-button>
-    <el-button type="primary">Primary</el-button>
-    <el-button type="success">Success</el-button>
-    <el-button type="info" @click="browserDemo">{{ t('liu-lan-qi') }}</el-button>
+    <el-button type="primary" @click="saveZip({})">生成压缩文件</el-button>
+
+    <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+      :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+      <el-button type="success">上传WT</el-button>
+    </el-upload>
+    <el-button type="info" @click="browserDemo">浏览器</el-button>
     <el-button type="warning" @click="printDemo">打印</el-button>
     <el-button type="danger" @click="handleGo('/about')">关于</el-button>
 
@@ -11,12 +15,20 @@
     <div class="i-vscode-icons-file-type-objidconfig?mask text-red-500"></div>
 
   </el-row>
+  <div>
+    <el-input v-model="input" placeholder="Please input" />
+    <el-button type="info" @click="addLog">添加日志</el-button>
+  </div>
+  {{ log }}
 </template>
 
 <script lang="ts" setup>
+
+import JSZip from 'jszip'
 import { useI18n } from "vue-i18n";
 import { invoke } from "@renderer/utils/ipcRenderer";
 import { IpcChannel } from "@/ipc";
+import type { UploadProps } from 'element-plus'
 const router = useRouter();
 const { t } = useI18n();
 const handleGo = (path: string) => {
@@ -31,11 +43,62 @@ function printDemo() {
 function browserDemo() {
   invoke(IpcChannel.OpenBrowserDemoWindow);
 }
-
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  console.log("===🐛=== ~ file: index.vue:47 ~ rawFile:", rawFile);
+  if (rawFile.type !== '') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
+let input = ref('')
+let log = ref({})
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+  console.log("===🐛=== ~ file: index.vue:60 ~ uploadFile:", uploadFile);
+  JSZip.loadAsync(uploadFile.raw!).then((zip) => {
+    console.log("===🐛=== ~ file: index.vue:64 ~ JSZip.loadAsync ~ zip:", zip);
+    zip.files['log.json'].async('text').then((res) => {
+      console.log("===🐛=== ~ file: index.vue:61 ~ zip.files['log.json'].async ~ res:", res);
+      log.value = JSON.parse(res)
+    })
+  })
+}
+function addLog() {
+  log.value[new Date().getTime()] =
+    { type: 'info', title: input.value }
+  saveZip(log.value)
+}
+function saveZip(loginfo: object) {
+  const zip = new JSZip();
+  let user = {
+    name: '小康2',
+    sex: '男'
+  }
+  zip.file('user.json', JSON.stringify(user))
+  zip.file("log.json", JSON.stringify(loginfo));
+  zip.generateAsync({ type: "blob", comment: `${user.name},${user.sex}` }).then(function (content) {
+    // see FileSaver.js
+    var filename = user.name + '.wt'
+    // 创建隐藏的可下载链接
+    var eleLink = document.createElement('a')
+    eleLink.download = filename
+    eleLink.style.display = 'none'
+    // 下载内容转变成blob地址
+    eleLink.href = URL.createObjectURL(content)
+    // 触发点击
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    // 然后移除
+    document.body.removeChild(eleLink)
+  });
+}
 </script>
-
-
-<style scoped lang="scss"></style>
 
 
 <style scoped lang="scss"></style>
