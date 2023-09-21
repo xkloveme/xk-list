@@ -16,4 +16,3 @@ build/
 *.njsproj
 *.sln
 .electron-vite/bytecode/_temp/main.js
-.npmrc

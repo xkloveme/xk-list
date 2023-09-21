@@ -51,7 +51,6 @@
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@vue/compiler-sfc": "^3.3.4",
     "adm-zip": "^0.5.10",
-    "body-parser": "^1.20.2",
     "cfonts": "^3.2.0",
     "chalk": "5.3.0",
     "cross-env": "^7.0.3",
