@@ -1,7 +1,7 @@
 import { createI18n } from "vue-i18n"
 
 export function loadLanguages() {
-    const context = import.meta.globEager("./languages/*.ts");
+    const context:any = import.meta.globEager("./languages/*.ts");
 
     const languages: AnyObject = {};
 
