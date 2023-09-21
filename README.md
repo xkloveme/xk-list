@@ -1,12 +1,12 @@
-# electron-vite-template
+# xk-list
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/umbrella22/electron-vite-template/tree/strict)
-![GitHub Repo stars](https://img.shields.io/github/stars/umbrella22/electron-vite-template)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/xkloveme/xk-list/tree/strict)
+![GitHub Repo stars](https://img.shields.io/github/stars/xkloveme/xk-list)
 [![vue](https://img.shields.io/badge/vue-3.2.37-brightgreen.svg)](https://github.com/vuejs/vue-next)
 [![vite](https://img.shields.io/badge/vite-3.0.3-brightgreen.svg)](https://github.com/vitejs/vite)
 [![element-ui](https://img.shields.io/badge/element-plus-brightgreen.svg)](https://www.npmjs.org/package/element-plus)
 [![electron](https://img.shields.io/badge/electron-18.3.5-brightgreen.svg)](https://github.com/electron/electron)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/umbrella22/electron-vite-template/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xkloveme/xk-list/blob/master/LICENSE)
 
 # Installation
 
@@ -16,15 +16,15 @@ To run a project, you need to have **node version 16** or higher and **use yarn 
 
 [For Chinese Developers](/README_ZH.md)
 
-[![Build Updater Status](https://github.com/umbrella22/electron-vite-template/actions/workflows/Build%20Update.yml/badge.svg)](https://github.com/umbrella22/electron-vite-template/actions/workflows/Build%20Update.yml)
+[![Build Updater Status](https://github.com/xkloveme/xk-list/actions/workflows/Build%20Update.yml/badge.svg)](https://github.com/xkloveme/xk-list/actions/workflows/Build%20Update.yml)
 
 # Build Setup
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/umbrella22/electron-vite-template.git
+$ git clone https://github.com/xkloveme/xk-list.git
 # Go into the repository
-$ cd electron-vite-template
+$ cd xk-list
 # install dependencies
 $ npm install
 
@@ -58,5 +58,5 @@ $ npm build
 
 # Note
 
-- [gitee](https://gitee.com/Zh-Sky/electron-vite-template) is only for domestic users to pull code，from github to synchronize，please visit github for PR
+- [gitee](https://gitee.com/Zh-Sky/xk-list) is only for domestic users to pull code，from github to synchronize，please visit github for PR
 - **Welcome to Issues and PR**

@@ -26,7 +26,7 @@ const request = axios.create()
  * @param type 类型，默认sha256
  * @param key 密钥，用于匹配计算结果
  * @returns {string} 计算结果
- * @author umbrella22
+ * @author xkloveme
  * @date 2021-03-05
  */
 function hash(data, type = 'sha256', key = 'Sky') {
@@ -40,7 +40,7 @@ function hash(data, type = 'sha256', key = 'Sky') {
  * @param url 下载地址
  * @param filePath 文件存放地址
  * @returns {void}
- * @author umbrella22
+ * @author xkloveme
  * @date 2021-03-05
  */
 async function download(url: string, filePath: string) {
@@ -59,7 +59,7 @@ const updateInfo: {
 /**
  * @param windows 指主窗口
  * @returns {void}
- * @author umbrella22
+ * @author xkloveme
  * @date 2021-03-05
  */
 export const updater = async (windows?: BrowserWindow) => {

@@ -1,9 +1,9 @@
 {
-  "name": "electron-vite-template",
+  "name": "xk-list",
   "version": "1.0.7",
   "main": "./dist/electron/main/main.js",
   "author": "xkloveme <https://github.com/xkloveme>",
-  "description": "electron-vite-template project",
+  "description": "xk-list project",
   "license": "MIT",
   "encryptionLevel": 0,
   "scripts": {
