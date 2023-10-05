@@ -12,7 +12,6 @@ import { computed } from "vue";
 import { ElConfigProvider } from "element-plus";
 import { i18n } from "./i18n";
 import TitleBar from "./components/common/TitleBar.vue";
-
 const i18nt = computed(() => i18n.global.messages.value[i18n.global.locale.value].el);
 </script>
 

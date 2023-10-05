@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-05 13:43:24
+ * @LastEditTime: 2023-10-05 18:23:20
  * @LastEditors: xkloveme
  * @FileDesc 首页
  * @FilePath: /xk-list/src/renderer/views/home/index.vue
@@ -25,8 +25,14 @@
       </template>
       <template #extra>
         <div class="flex items-center">
-          <el-button>Print</el-button>
-          <el-button type="primary" class="ml-2">Edit</el-button>
+          <el-button circle plain type="primary" @click="handleLockPage">
+            <template #icon>
+              <i class="i-vscode-icons-file-type-light-codeowners?mask text-4xl" />
+            </template>
+          </el-button>
+          <el-button @click="handleGo('/about')" circle plain type="warning" class="ml-2"><template #icon>
+              <i class="i-vscode-icons-file-type-config?mask text-4xl" />
+            </template></el-button>
         </div>
       </template>
     </el-page-header>
@@ -144,10 +150,15 @@ interface TreeNodeList {
 }
 const storeUser = useUserStore();
 const route = useRoute();
+const router = useRouter();
 let packageJson = require("./package.json")
 let version = packageJson.version
 let description = packageJson.description
-
+const handleGo = (path: string) => {
+  router.push({
+    path: path
+  })
+}
 let isEmpty = ref(true)
 
 let FileList: any = ref<string[]>([]);
@@ -221,7 +232,10 @@ async function handleEditData() {
     })
   })
 }
-
+function handleLockPage(){
+  storeUser.IS_LOCK_CHANGE()
+  handleGo('/lock')
+}
 
 function openNewWinEdit(id, path) {
   let data = {

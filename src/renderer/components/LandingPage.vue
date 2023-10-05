@@ -1,16 +1,19 @@
 <template>
   <div id="wrapper">
-    <img id="logo" :src="logo" alt="electron-vue" />
     <main>
       <div class="left-side">
+        <img id="logo" :src="logo" alt="electron-vue" />
+      </div>
+
+      <div class="right-side">
         <span class="title">
           {{ t("welcome") }}
         </span>
         <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
+        <router-link to="/">
+            <el-button type="success">返回首页</el-button>
+          </router-link>
+        <!-- <div class="doc">
           <div class="title alt">
             {{ t("buttonTips") }}
           </div>
@@ -20,8 +23,8 @@
           <el-button type="primary" round @click="CheckUpdate('one')">
             {{ t("buttons.checkUpdate") }}
           </el-button>
-        </div>
-        <div class="doc">
+        </div> -->
+        <!-- <div class="doc">
           <el-button type="primary" round @click="CheckUpdate('two')">
             {{ t("buttons.checkUpdate2") }}
           </el-button>
@@ -50,9 +53,9 @@
           <el-button type="primary" round @click="openPreloadWindow">
             {{ t("buttons.openPreloadWindow") }}
           </el-button>
-        </div>
+        </div> -->
         <div class="doc">
-          <el-button type="primary" round @click="openNewWin">
+          <!-- <el-button type="primary" round @click="openNewWin">
             {{ t("buttons.openNewWindow") }}
           </el-button>
           <el-button type="primary" round @click="changeLanguage">{{
@@ -66,18 +69,16 @@
           }}</el-button>
           <el-button v-if="showInMyComputer !== 0" type="primary" round @click="setShowOnMyComputer">{{
             t(showInMyComputer === 1 ? "buttons.hideOnMyComputer" : "buttons.showOnMyComputer")
-          }}</el-button>
-          <router-link to="/">
-            <el-button type="success">首页</el-button>
-          </router-link>
+          }}</el-button> -->
+      
           
         </div>
-        <div class="doc">
+        <!-- <div class="doc">
           <el-pagination :current-page="elCPage" :page-sizes="[100, 200, 300, 400]" :page-size="elPageSize"
             layout="total, sizes, prev, pager, next, jumper" :total="400" @size-change="handleSizeChange"
             @current-change="handleCurrentChange">
           </el-pagination>
-        </div>
+        </div> -->
       </div>
     </main>
     <el-dialog title="进度" v-model="dialogVisible" :before-close="handleClose" center width="14%" top="45vh">
