@@ -7,6 +7,7 @@ import type {
   WebContentsPrintOptions,
 } from "electron";
 import { ProgressInfo } from "electron-updater";
+import { StartLoggingOptions } from "electron/common";
 
 type IpcMainEventListener<Send = void, Receive = void> = {
   ipcMainHandle: (
@@ -20,6 +21,17 @@ type IpcRendererEventListener<Send = void> = {
   ipcRendererOn: (event: IpcRendererEvent, args?: Send) => void;
   webContentSend: (args: Send) => void;
 };
+
+interface TreeNode {
+  id: string;
+  label: string;
+  filePath: string;
+  children?: TreeNode[];
+  isDirectory: boolean;
+  isFile: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const enum IpcChannel {
   /**
@@ -212,6 +224,26 @@ export const enum IpcChannel {
    * 查询当前是否显示在我的电脑
    */
   CheckShowOnMyComputer = "check-show-on-my-computer",
+  /**
+  * 新增文件
+  */
+  AddFile = "add-file",
+  /**
+ * 编辑文件
+ */
+  EditFile = "edit-file",
+  /**
+  * 删除文件
+  */
+  DelFile = "del-file",
+  /**
+ * 文件列表
+ */
+  FileList = "file-list",
+  /**
+* 读取文件
+*/
+  ReadFile = "read-file",
 }
 
 type IpcMainEvent = {
@@ -316,6 +348,38 @@ type IpcMainEvent = {
   >;
   [IpcChannel.CheckShowOnMyComputer]: IpcMainEventListener<void, boolean>;
   [IpcChannel.SetShowOnMyComputer]: IpcMainEventListener<boolean, boolean>;
+  [IpcChannel.AddFile]: IpcMainEventListener<
+    {
+      isDir: boolean;
+      content?: any;
+      name: string;
+      path: string;
+    },
+    boolean
+  >;
+  [IpcChannel.EditFile]: IpcMainEventListener<{
+    isDir?: boolean;
+    newName?: string;
+    name: string;
+    path: string;
+    content?: any;
+  },
+    boolean>;
+  [IpcChannel.DelFile]: IpcMainEventListener<{
+    isDir?: boolean;
+    name: string;
+    path: string;
+  },
+    boolean>;
+  [IpcChannel.FileList]: IpcMainEventListener<
+    void,
+    TreeNode[]
+  >;
+  [IpcChannel.ReadFile]: IpcMainEventListener<
+    {
+      path: string;
+    },
+    ArrayBuffer>;
 };
 type IpcRenderderEvent = {
   [IpcChannel.DownloadProgress]: IpcRendererEventListener<number>;
@@ -335,12 +399,12 @@ type IpcRenderderEvent = {
   }>;
   [IpcChannel.HotUpdateStatus]: IpcRendererEventListener<{
     status:
-      | "init"
-      | "downloading"
-      | "moving"
-      | "finished"
-      | "failed"
-      | "download";
+    | "init"
+    | "downloading"
+    | "moving"
+    | "finished"
+    | "failed"
+    | "download";
     message: string;
   }>;
 

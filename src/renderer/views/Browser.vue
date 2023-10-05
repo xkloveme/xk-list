@@ -293,9 +293,6 @@ document.onmousemove = (e) => {
 // 拖拽逻辑 end
 </script>
 <style scoped>
-.browser {
-  padding-top: 30px;
-}
 .tabbar {
   position: relative;
   display: flex;

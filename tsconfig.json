@@ -8,10 +8,12 @@
     "declaration": false,
     "module": "esnext",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "allowJs": true,
     "target": "es2017",
     "types": ["vite/client"],
     "paths": {

@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import 'virtual:uno.css'
-import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
 import './styles/index.scss'
 import './permission'
@@ -13,10 +13,10 @@ import { i18n } from "./i18n"
 
 import TitleBar from "./components/common/TitleBar.vue"
 const app = createApp(App)
-const store = createPinia()
-// app.use(ElementPlus, { i18n: i18n.global.d })
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 app.use(router)
-app.use(store)
+app.use(pinia)
 app.use(i18n)
 errorHandler(app)
 

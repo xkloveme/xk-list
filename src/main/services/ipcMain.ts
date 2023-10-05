@@ -9,6 +9,7 @@ import Update from "./checkupdate";
 import { otherWindowConfig } from "../config/windowsConfig";
 import { usePrintHandle } from "./printHandle";
 import { useBrowserHandle } from "./browserHandle";
+import { useFileManageHandle } from "./fileManage";
 import { UpdateStatus } from "electron_updater_node_core";
 
 import { IpcMainHandle, IpcChannel, WebContentSend } from "../../ipc";
@@ -154,6 +155,7 @@ const ipcMainHandle: IpcMainHandle = {
   },
   ...usePrintHandle(),
   ...useBrowserHandle(),
+  ...useFileManageHandle()
 }
 
 type VoidParametersWebContentSendKey = {
@@ -176,5 +178,3 @@ export function installIpcMain() {
     ipcMain.handle(ipcChannelName, ipcListener)
   })
 }
-
-
