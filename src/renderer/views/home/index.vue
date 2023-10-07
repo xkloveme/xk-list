@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-05 18:23:20
+ * @LastEditTime: 2023-10-07 17:16:16
  * @LastEditors: xkloveme
  * @FileDesc 首页
  * @FilePath: /xk-list/src/renderer/views/home/index.vue
@@ -42,9 +42,42 @@
     <div class="mx-2">
       <el-container>
         <el-aside width="450px">
+          <div class="flex justify-between items-center text-md mb-1">
+            <h2>文件资源</h2>
+            <div class="flex items-center">
+              <el-tooltip class="box-item" effect="dark" content="新增文件" placement="top">
+                <el-button type="success" @click="openNewWinEdit('', null)" plain circle>
+                  <template #icon>
+                    <i class="i-vscode-icons-file-type-twig?mask"></i>
+                  </template>
+                </el-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="dark" content="新增文件夹" placement="top">
+                <el-button type="warning" @click="handleAddFolder" plain circle>
+                  <template #icon>
+                    <i class="i-vscode-icons-default-folder?mask"></i>
+                  </template>
+                </el-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="dark" content="刷新" placement="top">
+                <el-button type="primary" @click="refreshTree" plain circle>
+                  <template #icon>
+                    <i class="i-vscode-icons-file-type-codacy?mask"></i>
+                  </template>
+                </el-button>
+              </el-tooltip>
+              <el-tooltip class="box-item" effect="dark" content="删除" placement="top">
+                <el-button type="danger" :disabled="!currentNode" @click="delTree" plain circle>
+                  <template #icon>
+                    <i class="i-vscode-icons-file-type-xib?mask"></i>
+                  </template>
+                </el-button>
+              </el-tooltip>
+            </div>
+          </div>
           <el-input v-model="query" placeholder="请输入关键词" @input="onQueryChanged" />
           <el-tree-v2 ref="treeRef" @node-click="nodeClick" @node-expand="nodeExpand" @node-collapse="nodeCollapse"
-            highlight-current :data="FileList" :filter-method="filterMethod" :height="700">
+            highlight-current :data="FileList" :filter-method="filterMethod" :height="treeHeight">
             <template #default="{ node }">
               <span v-if="node.data.isFile" :class="[{
                 'i-vscode-icons-file-type-twig': node.data.isFile && node.isLeaf,
@@ -62,12 +95,12 @@
         <el-main>
           <div v-if="isEmpty">
             <el-empty description="暂未选择WT文件">
-              <el-button type="success" plain>
+              <el-button type="success" plain @click="openNewWinEdit('', null)">
                 <template #icon>
                   <i class="i-vscode-icons-file-type-twig?mask"></i>
                 </template>
                 新建WT文件</el-button>
-              <el-button type="warning" plain>
+              <el-button type="warning" plain @click="handleAddFolder">
                 <template #icon>
                   <i class="i-vscode-icons-default-folder?mask"></i>
                 </template>
@@ -113,28 +146,41 @@
         </el-main>
       </el-container>
     </div>
-    <el-drawer v-model="drawer" title="WT文件完善的日志信息" :before-close="handleClose">
+    <el-drawer v-model="drawer" size="50%" title="WT文件完善的日志信息" :before-close="handleClose">
       <div class="flex flex-col justify-center items-center">
         <el-avatar :size="80" class="hover:animate-spin">
           <div class="i-vscode-icons-file-type-twig text-6xl" />
         </el-avatar>
-        <div class="my-4 text-lg text-green-9 ">{{ currentNode.label }}</div>
+        <div class="my-4 mx-2 text-lg text-green-9 ">{{ currentNode.label }}</div>
       </div>
       <el-timeline>
         <el-timeline-item v-for="(activity, key) of log" :key="key" :type="activity.type" :timestamp="String(key)">
-          {{ activity.content }}
+          {{ activity.title }}:
+          <el-button @click="handleOpenLog(activity.content)" type="primary" size="small" plain round>日志详情</el-button>
         </el-timeline-item>
       </el-timeline>
     </el-drawer>
+    <el-dialog v-model="dialogVisible" title="日志详情" width="80%">
+      <div id="terminal" v-if="dialogVisible"></div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">
+            关闭
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Terminal } from 'xterm';
+import "xterm/css/xterm.css"
 import JSZip from 'jszip'
-import { ElMessageBox } from 'element-plus'
-import { invoke } from "@renderer/utils/ipcRenderer";
+import dayjs from 'dayjs'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { invoke, vueListen } from "@renderer/utils/ipcRenderer";
 import { IpcChannel } from "@/ipc";
-import type { UploadProps } from 'element-plus'
 import { ElTreeV2 } from 'element-plus'
 import type { TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 import { useUserStore } from "@renderer/store/modules/user";
@@ -143,14 +189,33 @@ interface TreeNodeList {
   label: string;
   filePath: string;
   children?: TreeNodeList[];
+  opened: boolean;
   isDirectory: boolean;
   isFile: boolean;
   createdAt: string;
   updatedAt: string;
 }
+
+// 从主程传递过来关闭子页面
+vueListen(IpcChannel.SendDataTest, (event, data) => {
+  console.log(11, event)
+  console.log(22, data)
+  data && refreshTree()
+})
+let dialogVisible = ref(false)
+function handleOpenLog(content) {
+  dialogVisible.value = true
+  nextTick(() => {
+    let term = new Terminal({ disableStdin: true, tabStopWidth: 0 });
+    term.open(document.getElementById('terminal'));
+    term.reset();
+    term.writeln(content && content.replace(/\n/g, "\r\n"))
+  })
+}
 const storeUser = useUserStore();
 const route = useRoute();
 const router = useRouter();
+let treeHeight = computed(() => document.documentElement.clientHeight - 225)
 let packageJson = require("./package.json")
 let version = packageJson.version
 let description = packageJson.description
@@ -162,13 +227,28 @@ const handleGo = (path: string) => {
 let isEmpty = ref(true)
 
 let FileList: any = ref<string[]>([]);
+
+const query = ref('')
+let currentNode = ref<TreeNodeList>()
+const treeRef = ref<InstanceType<typeof ElTreeV2>>()
 async function handleGetFileList() {
   FileList.value = await invoke(IpcChannel.FileList);
 }
-
-const query = ref('')
-const treeRef = ref<InstanceType<typeof ElTreeV2>>()
-
+function refreshTree() {
+  isEmpty.value = true
+  treeRef.value!.setCurrentKey(null)
+  currentNode.value = null
+  handleGetFileList()
+}
+async function delTree() {
+  const success = await invoke(IpcChannel.DelFile, { isDir: currentNode.value?.isDirectory, path: currentNode.value?.filePath });
+  if (success) {
+    ElMessage.success('删除成功')
+    refreshTree()
+  } else {
+    ElMessage.error('删除失败，请检查文件夹下是否有内容')
+  }
+}
 const onQueryChanged = (query: string) => {
   // TODO: fix typing when refactor tree-v2
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -177,7 +257,7 @@ const onQueryChanged = (query: string) => {
 const filterMethod = (query: string, node: TreeNode) => {
   return node.label!.includes(query)
 }
-let currentNode = ref<TreeNodeList>()
+
 function nodeClick(data, node) {
   currentNode.value = data
   isEmpty.value = data.isDirectory
@@ -188,19 +268,26 @@ function nodeExpand(data, node) {
 function nodeCollapse(data, node) {
   node.data.opened = false
 }
+function handleAddFolder() {
+  ElMessageBox.prompt('请输入文件名', '添加文件名', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    inputValue: `[${dayjs().format('YYYY-MM-DD')}]`,
+    inputPattern:
+      /^.{1,20}$/,
+    inputErrorMessage: '1-20位长度',
+  })
+    .then(async ({ value }) => {
+      const success = await invoke(IpcChannel.AddFile, { isDir: true, path: currentNode.value?.filePath, name: value })
+      success && handleGetFileList()
+      ElMessage({
+        type: 'success',
+        message: `文件夹新建成功:${value}`,
+      })
+    })
+}
 
-async function addFolder() {
-  let currentNode = treeRef.value!.getCurrentNode()
-  const success = await invoke(IpcChannel.AddFile, { isDir: true, path: currentNode?.filePath, name: `newFolder${new Date()}` })
-  success && handleGetFileList()
-}
-async function addFile() {
-  let currentNode = treeRef.value!.getCurrentNode()
-  console.log("===🐛=== ~ file: index.vue:94 ~ addFile ~ currentNode:", currentNode);
-  const success = await invoke(IpcChannel.AddFile, { isDir: false, path: currentNode?.filePath, name: `newFolder${new Date()}.wt`, content: '11' })
-  success && handleGetFileList()
-  console.log("===🐛=== ~ file: index.vue:96 ~ addFile ~ success:", success);
-}
+
 
 const drawer = ref(false)
 // 'primary' | 'success' | 'warning' | 'danger' | 'info'
@@ -226,20 +313,23 @@ async function handleEditData() {
   const data = await invoke(IpcChannel.ReadFile, { path: currentNode.value.filePath })
   JSZip.loadAsync(data).then((zip) => {
     zip.files['user.json'].async('text').then((res) => {
-      console.log("===🐛=== ~ file: index.vue:219 ~ zip.files['user.json'].async ~ res:", res);
       storeUser.EDIT_DATA_ACTION(currentNode.value.id, JSON.parse(res));
-      openNewWinEdit(currentNode.value.id, currentNode.value.filePath)
+      openNewWinEdit(currentNode.value.id, currentNode.value.filePath, false)
     })
   })
 }
-function handleLockPage(){
+function handleLockPage() {
   storeUser.IS_LOCK_CHANGE()
   handleGo('/lock')
 }
 
-function openNewWinEdit(id, path) {
+function openNewWinEdit(id, path, isAdd = true) {
+  let newPath = path || currentNode.value?.filePath || ''
+  if (isAdd && currentNode.value?.isFile) {
+    newPath = currentNode.value?.filePath.replace(currentNode.value?.label, "")
+  }
   let data = {
-    url: `/edit?id=${id}&path=${path}`
+    url: `/edit?id=${id}&path=${newPath}`
   };
   invoke(IpcChannel.OpenWin, data);
 }
@@ -248,4 +338,9 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content) {
+  border: 0.1px var(--el-color-error) dashed !important;
+  border-radius: 10px;
+}
+</style>

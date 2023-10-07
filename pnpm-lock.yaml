@@ -121,6 +121,9 @@ devDependencies:
   javascript-obfuscator:
     specifier: ^4.1.0
     version: registry.npmmirror.com/javascript-obfuscator@4.1.0
+  json-diff:
+    specifier: ^1.0.6
+    version: registry.npmmirror.com/json-diff@1.0.6
   jszip:
     specifier: ^3.10.1
     version: registry.npmmirror.com/jszip@3.10.1
@@ -175,6 +178,9 @@ devDependencies:
   vue-router:
     specifier: ^4.2.4
     version: registry.npmmirror.com/vue-router@4.2.4(vue@3.3.4)
+  xterm:
+    specifier: ^5.3.0
+    version: registry.npmmirror.com/xterm@5.3.0
 
 packages:
 
@@ -1180,6 +1186,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmmirror.com/@ewoudenberg/difflib@0.1.0:
+    resolution: {integrity: sha512-OU5P5mJyD3OoWYMWY+yIgwvgNS9cFAU10f+DDuvtogcWQOoJIsQ4Hy2McSfUfhKjq8L0FuWVb4Rt7kgA+XK86A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ewoudenberg/difflib/-/difflib-0.1.0.tgz}
+    name: '@ewoudenberg/difflib'
+    version: 0.1.0
+    dependencies:
+      heap: registry.npmmirror.com/heap@0.2.7
+    dev: true
 
   registry.npmmirror.com/@floating-ui/core@1.5.0:
     resolution: {integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@floating-ui/core/-/core-1.5.0.tgz}
@@ -2883,6 +2897,13 @@ packages:
     version: 2.0.20
     dev: true
 
+  registry.npmmirror.com/colors@1.4.0:
+    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/colors/-/colors-1.4.0.tgz}
+    name: colors
+    version: 1.4.0
+    engines: {node: '>=0.1.90'}
+    dev: true
+
   registry.npmmirror.com/combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/combined-stream/-/combined-stream-1.0.8.tgz}
     name: combined-stream
@@ -3271,6 +3292,15 @@ packages:
     name: dotenv
     version: 9.0.2
     engines: {node: '>=10'}
+    dev: true
+
+  registry.npmmirror.com/dreamopt@0.8.0:
+    resolution: {integrity: sha512-vyJTp8+mC+G+5dfgsY+r3ckxlz+QMX40VjPQsZc5gxVAxLmi64TBoVkP54A/pRAXMXsbu2GMMBrZPxNv23waMg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dreamopt/-/dreamopt-0.8.0.tgz}
+    name: dreamopt
+    version: 0.8.0
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      wordwrap: registry.npmmirror.com/wordwrap@1.0.0
     dev: true
 
   registry.npmmirror.com/duplexer@0.1.2:
@@ -4198,6 +4228,12 @@ packages:
     dependencies:
       function-bind: registry.npmmirror.com/function-bind@1.1.1
 
+  registry.npmmirror.com/heap@0.2.7:
+    resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/heap/-/heap-0.2.7.tgz}
+    name: heap
+    version: 0.2.7
+    dev: true
+
   registry.npmmirror.com/hosted-git-info@4.1.0:
     resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/hosted-git-info/-/hosted-git-info-4.1.0.tgz}
     name: hosted-git-info
@@ -4701,6 +4737,17 @@ packages:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/json-buffer/-/json-buffer-3.0.1.tgz}
     name: json-buffer
     version: 3.0.1
+    dev: true
+
+  registry.npmmirror.com/json-diff@1.0.6:
+    resolution: {integrity: sha512-tcFIPRdlc35YkYdGxcamJjllUhXWv4n2rK9oJ2RsAzV4FBkuV4ojKEDgcZ+kpKxDmJKv+PFK65+1tVVOnSeEqA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/json-diff/-/json-diff-1.0.6.tgz}
+    name: json-diff
+    version: 1.0.6
+    hasBin: true
+    dependencies:
+      '@ewoudenberg/difflib': registry.npmmirror.com/@ewoudenberg/difflib@0.1.0
+      colors: registry.npmmirror.com/colors@1.4.0
+      dreamopt: registry.npmmirror.com/dreamopt@0.8.0
     dev: true
 
   registry.npmmirror.com/json-schema-traverse@0.4.1:
@@ -6856,6 +6903,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  registry.npmmirror.com/wordwrap@1.0.0:
+    resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/wordwrap/-/wordwrap-1.0.0.tgz}
+    name: wordwrap
+    version: 1.0.0
+    dev: true
+
   registry.npmmirror.com/wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz}
     name: wrap-ansi
@@ -6895,6 +6948,12 @@ packages:
     version: 4.0.2
     engines: {node: '>=0.4'}
     dev: false
+
+  registry.npmmirror.com/xterm@5.3.0:
+    resolution: {integrity: sha512-8QqjlekLUFTrU6x7xck1MsPzPA571K5zNqWm0M0oroYEWVOptZ0+ubQSkQ3uxIEhcIHRujJy6emDWX4A7qyFzg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/xterm/-/xterm-5.3.0.tgz}
+    name: xterm
+    version: 5.3.0
+    dev: true
 
   registry.npmmirror.com/y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/y18n/-/y18n-5.0.8.tgz}

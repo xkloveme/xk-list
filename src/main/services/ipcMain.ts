@@ -138,6 +138,10 @@ const ipcMainHandle: IpcMainHandle = {
         });
       }
     });
+     // 渲染进程显示时触发
+     ChildWin.once("close", () => {
+      BrowserWindow.fromWebContents(_event.sender)?.webContents.send("send-data-test", true);
+    });
     // 渲染进程显示时触发
     ChildWin.once("show", () => {
       ChildWin.webContents.send("send-data-test", arg.sendData);

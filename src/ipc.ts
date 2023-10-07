@@ -27,6 +27,7 @@ interface TreeNode {
   label: string;
   filePath: string;
   children?: TreeNode[];
+  opened: boolean;
   isDirectory: boolean;
   isFile: boolean;
   createdAt: string;
@@ -350,10 +351,11 @@ type IpcMainEvent = {
   [IpcChannel.SetShowOnMyComputer]: IpcMainEventListener<boolean, boolean>;
   [IpcChannel.AddFile]: IpcMainEventListener<
     {
+      id?: number | string;
       isDir: boolean;
-      content?: any;
+      content?: string;
       name: string;
-      path: string;
+      path?: string;
     },
     boolean
   >;
@@ -367,7 +369,6 @@ type IpcMainEvent = {
     boolean>;
   [IpcChannel.DelFile]: IpcMainEventListener<{
     isDir?: boolean;
-    name: string;
     path: string;
   },
     boolean>;
