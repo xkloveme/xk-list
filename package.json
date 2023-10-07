@@ -1,6 +1,6 @@
 {
   "name": "xk-list",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "main": "./dist/electron/main/main.js",
   "author": "xkloveme <https://github.com/xkloveme>",
   "description": "一款极为先进的数据收集工具",
