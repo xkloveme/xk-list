@@ -14,7 +14,7 @@ class MainInit {
   constructor() {
     this.winURL = winURL;
     this.shartURL = loadingURL;
-    if (process.env.NODE_ENV === "development") {
+    // if (process.env.NODE_ENV === "development") {
       menuconfig.push({
         label: "开发者设置",
         submenu: [
@@ -25,7 +25,7 @@ class MainInit {
           },
         ],
       });
-    }
+    // }
     // 启用协议
     installIpcMain();
   }

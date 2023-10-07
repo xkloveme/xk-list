@@ -58,5 +58,5 @@ $ npm build
 
 # Note
 
-- [gitee](https://gitee.com/Zh-Sky/xk-list) is only for domestic users to pull code，from github to synchronize，please visit github for PR
+- [gitee](https://gitee.com/xkloveme/xk-list) is only for domestic users to pull code，from github to synchronize，please visit github for PR
 - **Welcome to Issues and PR**
