@@ -352,6 +352,8 @@ type IpcMainEvent = {
   [IpcChannel.AddFile]: IpcMainEventListener<
     {
       id?: number | string;
+      log?: number | string;
+      type?: number | string;
       isDir: boolean;
       content?: string;
       name: string;

@@ -1,7 +1,7 @@
 /*
  * @Author: xkloveme
  * @Date: 2023-09-21 17:11:13
- * @LastEditTime: 2023-10-07 17:18:44
+ * @LastEditTime: 2023-10-08 14:54:41
  * @LastEditors: xkloveme
  * @Description: 文件管理中心
  * @FilePath: /xk-list/src/main/services/fileManage.ts
@@ -9,7 +9,7 @@
  */
 import JSZip from 'jszip'
 import dayjs from 'dayjs'
-import { diffString } from 'json-diff';
+import { diff } from 'jsondiffpatch';
 import { app, BrowserWindow, dialog } from "electron";
 import { IpcChannel, IpcMainHandle } from "../../ipc";
 import { webContentSend } from './ipcMain'
@@ -90,8 +90,9 @@ function setFileContentWT(loginfo: object, content: string, path: string, newPat
     fs.writeFileSync(path, content);
     newPath && fs.rename(path, newPath, (err) => {
       throw err;
-  });
+    });
     webContentSend(win.webContents, IpcChannel.SendDataTest, true);
+    return true;
   });
 }
 
@@ -104,7 +105,7 @@ export function useFileManageHandle(): Pick<IpcMainHandle,
   | IpcChannel.FileList
   | IpcChannel.ReadFile> {
   return {
-    [IpcChannel.AddFile]: (event, { isDir, content, name, id, path = basePath }) => {
+    [IpcChannel.AddFile]: (event, { isDir, content, log, type, name, id, path = basePath }) => {
       /**
        * @Description: 新增文件 OR 文件夹
        * @Date: 2023-09-21 17:13:23
@@ -121,20 +122,21 @@ export function useFileManageHandle(): Pick<IpcMainHandle,
                 loginfo = JSON.parse(res)
               })
               zip.files['user.json'].async('text').then((res) => {
-                let diffStr = diffString(JSON.parse(res), JSON.parse(content))
+                let diffStr = diff(JSON.parse(res), JSON.parse(content))
                 loginfo = {
                   ...loginfo,
                   [dayjs().format('YYYY-MM-DD HH:mm:ss')]:
-                    { type: 'warning', title: '修改文件', content: diffStr }
+                    { type: type || 'warning', title: log || '修改文件', content: diffStr }
                 }
                 let newPath = path.replace(/[^\/]+(?=\.[^\/.]*$).wt/, name)
                 setFileContentWT(loginfo, content, path, newPath)
               })
             })
           } else {
+            let diffStr = diff({}, JSON.parse(content))
             loginfo = {
               [dayjs().format('YYYY-MM-DD HH:mm:ss')]:
-                { type: 'info', title: '初始化', content: '生成WT文件' }
+                { type: 'info', title: '初始化', content: diffStr }
             }
             setFileContentWT(loginfo, content, path ? join(path, name) : join(basePath, name))
           }

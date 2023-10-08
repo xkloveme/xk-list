@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-08 11:18:02
+ * @LastEditTime: 2023-10-08 14:58:11
  * @LastEditors: xkloveme
  * @FileDesc 首页
  * @FilePath: /xk-list/src/renderer/views/home/index.vue
@@ -156,12 +156,14 @@
       <el-timeline>
         <el-timeline-item v-for="(activity, key) of log" :key="key" :type="activity.type" :timestamp="String(key)">
           {{ activity.title }}:
-          <el-button @click="handleOpenLog(activity.content)" type="primary" size="small" plain round>日志详情</el-button>
+          <el-button @click="handleOpenLog(activity)" type="primary" size="small" plain round>日志详情</el-button>
         </el-timeline-item>
       </el-timeline>
     </el-drawer>
     <el-dialog v-model="dialogVisible" title="日志详情" width="80%">
-      <div id="terminal" v-if="dialogVisible"></div>
+      <el-switch v-model="showCodeAll" @change="handleShowChangeCode" active-text="展示全部" inactive-text="仅展示不同"
+        active-color="#13ce66" />
+      <div id="terminal" class="bg-black text-indigo rounded py-2 min-h-md" v-html="diffString"></div>
       <template #footer>
         <span class="dialog-footer">
           <el-button type="primary" @click="dialogVisible = false">
@@ -174,8 +176,8 @@
 </template>
 
 <script setup lang="ts">
-import { Terminal } from 'xterm';
-import "xterm/css/xterm.css"
+import "jsondiffpatch/dist/formatters-styles/html.css";
+import { formatters } from 'jsondiffpatch';
 import JSZip from 'jszip'
 import dayjs from 'dayjs'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -197,22 +199,27 @@ interface TreeNodeList {
   updatedAt: string;
 }
 
-// 从主程传递过来关闭子页面
-vueListen(IpcChannel.SendDataTest, (event, data) => {
-  console.log(11, event)
-  console.log(22, data)
-  data && refreshTree()
-})
+
+
 let dialogVisible = ref(false)
-function handleOpenLog(content) {
+let showCodeAll = ref(false)
+let diffString = ref('')
+let zipUserJson = ref({})
+function handleOpenLog(activity) {
   dialogVisible.value = true
   nextTick(() => {
-    let term = new Terminal({ disableStdin: true, tabStopWidth: 0 });
-    term.open(document.getElementById('terminal'));
-    term.reset();
-    term.writeln(content && content.replace(/\n/g, "\r\n"))
+    diffString.value = formatters.html.format(activity.content, zipUserJson.value)
+    formatters.html.hideUnchanged()
   })
 }
+function handleShowChangeCode(value) {
+  if (value) {
+    formatters.html.showUnchanged(true)
+  } else {
+    formatters.html.hideUnchanged()
+  }
+}
+
 const storeUser = useUserStore();
 const route = useRoute();
 const router = useRouter();
@@ -229,14 +236,15 @@ let FileList: any = ref<string[]>([]);
 const query = ref('')
 let currentNode = ref<TreeNodeList>()
 const treeRef = ref<InstanceType<typeof ElTreeV2>>()
+
 async function handleGetFileList() {
   FileList.value = await invoke(IpcChannel.FileList);
 }
-function refreshTree() {
+async function refreshTree() {
   isEmpty.value = true
   treeRef.value!.setCurrentKey(null)
   currentNode.value = null
-  handleGetFileList()
+  await handleGetFileList()
 }
 async function delTree() {
   const success = await invoke(IpcChannel.DelFile, { isDir: currentNode.value?.isDirectory, path: currentNode.value?.filePath });
@@ -294,6 +302,9 @@ async function toggleDrawer() {
   drawer.value = true
   const data = await invoke(IpcChannel.ReadFile, { path: currentNode.value.filePath })
   JSZip.loadAsync(data).then((zip) => {
+    zip.files['user.json'].async('text').then((res) => {
+      zipUserJson.value = JSON.parse(res)
+    })
     zip.files['log.json'].async('text').then((res) => {
       log.value = JSON.parse(res)
     })
@@ -309,7 +320,7 @@ const handleClose = (done: () => void) => {
 }
 async function handleEditData() {
   const data = await invoke(IpcChannel.ReadFile, { path: currentNode.value.filePath })
-  JSZip.loadAsync(data).then((zip) => {
+  JSZip.loadAsync(data!).then((zip) => {
     zip.files['user.json'].async('text').then((res) => {
       storeUser.EDIT_DATA_ACTION(currentNode.value.id, JSON.parse(res));
       openNewWinEdit(currentNode.value.id, currentNode.value.filePath, false)
@@ -332,8 +343,14 @@ function openNewWinEdit(id, path, isAdd = true) {
   invoke(IpcChannel.OpenWin, data);
 }
 onMounted(() => {
-  handleGetFileList()
+  refreshTree()
 });
+// 从主程传递过来关闭子页面
+vueListen(IpcChannel.SendDataTest, (event, data) => {
+  console.log(11, event)
+  console.log(22, data)
+  data && refreshTree()
+})
 </script>
 
 <style scoped lang="scss">

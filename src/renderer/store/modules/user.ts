@@ -31,6 +31,9 @@ export const useUserStore = defineStore({
     IS_LOGIN(data: boolean) {
       this.isLogin = data;
     },
+    DEL_DATA_ACTION(key: number | string) {
+      delete this.editTable[key]; 
+    },
     EDIT_DATA_ACTION(key: number | string, data: object) {
       this.editTable[key] = data;
     },
