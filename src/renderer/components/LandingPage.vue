@@ -13,6 +13,12 @@
         <router-link to="/">
             <el-button type="success">返回首页</el-button>
           </router-link>
+          <el-button type="primary" round @click="CheckUpdate('one')">
+            {{ t("buttons.checkUpdate") }}
+          </el-button>
+          <el-button type="primary" round @click="CheckUpdate('three')">
+            {{ t("buttons.checkUpdateInc") }}
+          </el-button>
         <!-- <div class="doc">
           <div class="title alt">
             {{ t("buttonTips") }}
