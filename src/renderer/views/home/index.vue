@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-07 17:16:16
+ * @LastEditTime: 2023-10-08 11:18:02
  * @LastEditors: xkloveme
  * @FileDesc 首页
  * @FilePath: /xk-list/src/renderer/views/home/index.vue
@@ -184,6 +184,7 @@ import { IpcChannel } from "@/ipc";
 import { ElTreeV2 } from 'element-plus'
 import type { TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 import { useUserStore } from "@renderer/store/modules/user";
+import { version, description } from "../../../../package.json";
 interface TreeNodeList {
   id: string;
   label: string;
@@ -216,9 +217,6 @@ const storeUser = useUserStore();
 const route = useRoute();
 const router = useRouter();
 let treeHeight = computed(() => document.documentElement.clientHeight - 225)
-let packageJson = require("./package.json")
-let version = packageJson.version
-let description = packageJson.description
 const handleGo = (path: string) => {
   router.push({
     path: path

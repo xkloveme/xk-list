@@ -57,7 +57,7 @@
     "dayjs": "^1.11.10",
     "del": "^7.1.0",
     "dotenv": "^16.3.1",
-    "electron": "^26.2.2",
+    "electron": "^26.3.0",
     "electron-builder": "^24.6.4",
     "electron-devtools-vendor": "^1.2.0",
     "electron_updater_node_cli": "^0.3.3",
