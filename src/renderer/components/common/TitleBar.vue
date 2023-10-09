@@ -1,12 +1,12 @@
 <template>
   <div class="window-title" v-if="!IsUseSysTitle && isNotMac && !IsWeb">
     <!-- 软件logo预留位置 -->
-    <div style="-webkit-app-region: drag" class="logo">
+    <!-- <div style="-webkit-app-region: drag" class="logo">
       <img
         src="@renderer/assets/icons/svg/electron-logo.svg"
         class="icon-logo"
       />
-    </div>
+    </div> -->
     <!-- 菜单栏位置 -->
     <div></div>
     <!-- 中间标题位置 -->
@@ -69,9 +69,9 @@ const Close = () => {
   background-color: #ffffff;
   display: flex;
   -webkit-app-region: drag;
-  // position: fixed;
-  // top: 0;
-  z-index: 99999;
+  position: fixed;
+  top: 0;
+  z-index: 99;
   .icon-logo {
     width: 1em;
     height: 1em;

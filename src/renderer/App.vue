@@ -2,7 +2,7 @@
   <title-bar />
   <el-config-provider :locale="i18nt">
     <router-view v-slot="{ Component }">
-      <component :is="Component" />
+      <component :is="Component" class="pt-7"/>
     </router-view>
   </el-config-provider>
 </template>

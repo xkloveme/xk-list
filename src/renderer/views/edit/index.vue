@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-08 14:55:27
+ * @LastEditTime: 2023-10-09 11:09:52
  * @LastEditors: xkloveme
  * @FileDesc 编辑页
  * @FilePath: /xk-list/src/renderer/views/edit/index.vue
@@ -14,7 +14,7 @@
     {{ user }}
     <el-input v-model="user.name" />
     <el-input v-model="user.sex" />
-    <el-button type="primary" @click="submit">提交</el-button>
+    <el-button type="primary" @click="submit(null,null)">提交</el-button>
     <el-button type="primary" @click="Close">关闭</el-button>
 
     <el-input v-model="user.desc" type="textarea" />
@@ -41,8 +41,8 @@ vueListen(IpcChannel.SendDataTest, (event, data) => {
 })
 let user = ref(storeUser.$state.editTable[route.query.id] || {})
 
-async function submit (log = '', type = 'warning') {
-  const success = await invoke(IpcChannel.AddFile, { isDir: false, name: `${dayjs().format('YYYYMMDDHHmmss')}${user.value.name}.wt`, log, type, path: route.query.path, id: route.query.id, content: JSON.stringify(user.value) })
+async function submit (logStr = '', type = 'warning') {
+  const success = await invoke(IpcChannel.AddFile, { isDir: false, name: `${dayjs().format('YYYYMMDDHHmmss')}${user.value.name}.wt`, log: logStr, type: type, path: route.query.path, id: route.query.id, content: JSON.stringify(user.value) })
   if (success) {
     ElMessage({
       type: 'success',

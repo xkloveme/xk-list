@@ -1,7 +1,7 @@
 /*
  * @Author: xkloveme
  * @Date: 2023-09-21 17:11:13
- * @LastEditTime: 2023-10-08 14:54:41
+ * @LastEditTime: 2023-10-09 10:56:56
  * @LastEditors: xkloveme
  * @Description: 文件管理中心
  * @FilePath: /xk-list/src/main/services/fileManage.ts
@@ -106,6 +106,7 @@ export function useFileManageHandle(): Pick<IpcMainHandle,
   | IpcChannel.ReadFile> {
   return {
     [IpcChannel.AddFile]: (event, { isDir, content, log, type, name, id, path = basePath }) => {
+      console.log("===🐛=== ~ file: fileManage.ts:109 ~ isDir, content, log, type, name, id, path:", isDir, content, log, type, name, id, path);
       /**
        * @Description: 新增文件 OR 文件夹
        * @Date: 2023-09-21 17:13:23

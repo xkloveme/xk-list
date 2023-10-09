@@ -1,6 +1,6 @@
 <!--
  * @Date: 2023-10-04
- * @LastEditTime: 2023-10-08 14:58:11
+ * @LastEditTime: 2023-10-09 10:44:46
  * @LastEditors: xkloveme
  * @FileDesc 首页
  * @FilePath: /xk-list/src/renderer/views/home/index.vue
@@ -8,7 +8,7 @@
 -->
 <template>
   <div class="main">
-    <el-page-header class="mx-6">
+    <el-page-header class="mx-6" style="-webkit-app-region: drag">
       <template #title>
         <span class="text-3xl font-600">数据收集</span>
       </template>
@@ -24,7 +24,7 @@
         </div>
       </template>
       <template #extra>
-        <div class="flex items-center">
+        <div class="flex items-center" style="-webkit-app-region: no-drag">
           <el-button circle plain type="primary" @click="handleLockPage">
             <template #icon>
               <i class="i-vscode-icons-file-type-light-codeowners?mask text-4xl" />
@@ -36,7 +36,7 @@
         </div>
       </template>
     </el-page-header>
-    <el-divider>
+    <el-divider style="-webkit-app-region: drag">
       <div class="i-vscode-icons-file-type-tuc animate-spin"></div>
     </el-divider>
     <div class="mx-2">
@@ -207,6 +207,7 @@ let diffString = ref('')
 let zipUserJson = ref({})
 function handleOpenLog(activity) {
   dialogVisible.value = true
+  showCodeAll.value = false
   nextTick(() => {
     diffString.value = formatters.html.format(activity.content, zipUserJson.value)
     formatters.html.hideUnchanged()
